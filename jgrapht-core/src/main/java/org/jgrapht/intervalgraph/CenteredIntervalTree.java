@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.jgrapht.Graph;
 import org.jgrapht.intervalgraph.interval.Interval;
 
-public class CenteredIntervalTree<T extends Comparable<T>> implements IntervalGraphInterface<T> {
+public class CenteredIntervalTree<T extends Comparable<T>>  {
     private T centerPoint;
     private CenteredIntervalTree<T> leftTree; // contains all the intervals *completely* to the left of the center point
     private CenteredIntervalTree<T> rightTree; // contains all the intervals *completely* to the right of the center point
@@ -67,14 +67,14 @@ public class CenteredIntervalTree<T extends Comparable<T>> implements IntervalGr
         rightTree.initialize(rightIntervals);
     }
 
-    @Override
+    //@Override
     public Collection<Interval<T>> intersections(T point) {
         Set<Interval<T>> result = new HashSet<>(); // TODO Be aware, that I dont know if using sets guarantees linear run time
         intersections(point, result);
         return result;
     }
 
-    @Override
+    //@Override
     public Collection<Interval<T>> intersections(Interval<T> queryInterval) {
         throw new RuntimeException("Method not implemented.");
     }
@@ -111,7 +111,7 @@ public class CenteredIntervalTree<T extends Comparable<T>> implements IntervalGr
         }
     }
 
-    @Override
+    //@Override
     public Graph asGraph() {
         throw new RuntimeException("Method not implemented.");
     }

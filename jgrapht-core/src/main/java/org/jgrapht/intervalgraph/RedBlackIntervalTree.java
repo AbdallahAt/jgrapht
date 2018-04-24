@@ -2,12 +2,26 @@ package org.jgrapht.intervalgraph;
 
 import org.jgrapht.intervalgraph.interval.Interval;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 // Essentially, this class updates the hi value after any operation on this tree.
 // The hi value equals to the highest endpoint in the subtree
-public class RedBlackIntervalTree<T extends Comparable<T>, I extends Interval<T>> extends RedBlackTree<T, I> implements IntervalTreeInterface<T, I> {
+public class RedBlackIntervalTree<
+        T extends Comparable<T>,
+        I extends Interval<T>>
+        extends RedBlackTree<T, I>
+        implements IntervalTreeInterface<T, I> {
+    @Override
+    public void add(I interval) {
+        insert(interval.getStart(), interval);
+    }
+
+    @Override
+    public void remove(I interval) {
+        delete(interval.getStart());
+    }
 
     @Override
     public List<I> overlapsWith(I interval) {
@@ -89,7 +103,6 @@ public class RedBlackIntervalTree<T extends Comparable<T>, I extends Interval<T>
         node.setHi(result);
     }
 
-
     // returns the max of two values
     public T max(T t1, T t2) {
         if (t1.compareTo(t2) > 0) {
@@ -143,6 +156,12 @@ public class RedBlackIntervalTree<T extends Comparable<T>, I extends Interval<T>
         // check right subtree if their start values are smaller (equal) than query point
         if (point.compareTo(node.getVal().getStart()) >= 0) {
             overlapsWithPoint(node.getRightChild(), point, result);
+        }
+    }
+
+    public void removeAll(Collection<? extends I> vertices) {
+        for (I vertex : vertices) {
+            delete(vertex.getStart());
         }
     }
 }
